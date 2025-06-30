@@ -19,7 +19,7 @@ def exibir_menu():
     print("10. Tempo Médio de Consumo por Plataforma")
     print("11. Comentários por Conteúdo")
     print("12. Ordenar Conteudos de A - Z")
-    print("13. Ordenar Conteudos Z - A")
+    print("13. Ordenar Conteudos de Z - A")
     print("0. Sair")
     return input("Escolha uma opção: ")
 
