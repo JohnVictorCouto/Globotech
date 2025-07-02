@@ -41,7 +41,7 @@ class SistemaAnaliseEngajamento:
         """
         try:
             with open(caminho_arquivo, mode='r', encoding='utf-8') as csvfile:
-                leitor = csv.DictReader(csvfile)
+                leitor = csv.DictReader(csvfile, delimiter=';')
                 for linha in leitor:
                     self._fila_interacoes_brutas.enfileirar(linha)  # O(1) para enfileirar
         except FileNotFoundError:
