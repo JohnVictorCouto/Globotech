@@ -71,7 +71,7 @@
 
 ---
 
-## ⏱️ Conversão de Tempo
+##  Conversão de Tempo
 
 - `converter_segundos(segundos)` → **O(1)**
 
@@ -87,7 +87,7 @@
 - `c` = número de comentários por conteúdo  
 
 
-## 📂 Estrutura do CSV
+##  Estrutura do CSV
 
 ```
 id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_duration_seconds;comment_text;plataforma;categoria;tipo_conteudo
