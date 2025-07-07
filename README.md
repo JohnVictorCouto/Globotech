@@ -77,6 +77,16 @@
 
 ---
 
+## Notação Usada
+
+- `n` = quantidade de conteúdos  
+- `m` = quantidade de interações (linhas no CSV)  
+- `u` = número de usuários  
+- `i` = número médio de interações por conteúdo  
+- `k` = número de interações por usuário  
+- `c` = número de comentários por conteúdo  
+
+
 ## 📂 Estrutura do CSV
 
 ```
@@ -84,7 +94,3 @@ id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_du
 ```
 
 ---
-
-## 📄 Licença
-
-Uso pessoal.
