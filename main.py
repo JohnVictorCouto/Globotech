@@ -13,7 +13,7 @@ def exibir_menu():
     print("4. Top 5 Conteúdos por Tempo Total Consumido")
     print("5. Top 5 Conteúdos Mais Curtidos")
     print("6. Top 5 Conteúdos Mais Visualizados")
-    print("7. Plataforma com Maior Engajamento")
+    print("7. Plataformas com Maior Engajamento")
     print("8. Conteúdos Mais Comentados")
     print("9. Total de Interações por Tipo de Conteúdo")
     print("10. Tempo Médio de Consumo por Plataforma")
