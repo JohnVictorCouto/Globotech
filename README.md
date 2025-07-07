@@ -1,12 +1,6 @@
-# 📊 Sistema de Análise de Engajamento
+##  Funcionalidades e Complexidade Algorítmica
 
-Este projeto implementa um sistema robusto para análise de dados de engajamento em plataformas de mídia digital (vídeos, podcasts e artigos), com uso de **Programação Orientada a Objetos (POO)** e **estruturas de dados clássicas** como **Fila** e **Árvore Binária de Busca (BST)**, com foco em **eficiência algorítmica**, organização modular e extensibilidade.
-
----
-
-## ⚙️ Funcionalidades e Complexidade Algorítmica
-
-### 📥 Carregamento e Processamento
+### Carregamento e Processamento
 
 | Método | Descrição | Complexidade |
 |--------|-----------|--------------|
@@ -15,7 +9,7 @@ Este projeto implementa um sistema robusto para análise de dados de engajamento
 
 ---
 
-### 📊 Relatórios de Conteúdo
+### Relatórios de Conteúdo
 
 | Método | Função | Complexidade |
 |--------|--------|--------------|
@@ -30,7 +24,7 @@ Este projeto implementa um sistema robusto para análise de dados de engajamento
 
 ---
 
-### 👤 Relatórios de Usuários
+###  Relatórios de Usuários
 
 | Método | Função | Complexidade |
 |--------|--------|--------------|
@@ -39,7 +33,7 @@ Este projeto implementa um sistema robusto para análise de dados de engajamento
 
 ---
 
-### 🌐 Relatórios de Plataforma
+###  Relatórios de Plataforma
 
 | Método | Função | Complexidade |
 |--------|--------|--------------|
@@ -49,7 +43,7 @@ Este projeto implementa um sistema robusto para análise de dados de engajamento
 
 ---
 
-### 🔍 Buscas e Filtros
+###  Buscas e Filtros
 
 | Método | Função | Complexidade |
 |--------|--------|--------------|
@@ -58,7 +52,7 @@ Este projeto implementa um sistema robusto para análise de dados de engajamento
 
 ---
 
-### 🤖 Recomendação
+###  Recomendação
 
 | Método | Função | Complexidade |
 |--------|--------|--------------|
@@ -66,7 +60,7 @@ Este projeto implementa um sistema robusto para análise de dados de engajamento
 
 ---
 
-## 📐 Estruturas de Dados e Ordenações
+##  Estruturas de Dados e Ordenações
 
 | Estrutura / Algoritmo | Utilização | Complexidade |
 |-----------------------|------------|--------------|
@@ -77,27 +71,13 @@ Este projeto implementa um sistema robusto para análise de dados de engajamento
 
 ---
 
-## 🧠 Exemplo de Uso
-
-```python
-sistema = SistemaAnaliseEngajamento()
-sistema.carregar_interacoes_csv("dados/interacoes_globo.csv")
-sistema.processar_interacoes_da_fila()
-
-sistema.gerar_relatorio_engajamento_conteudos(top_n=10)
-sistema.gerar_relatorio_atividade_usuarios()
-sistema.recomendar_conteudos_por_categoria("educação")
-```
-
----
-
 ## ⏱️ Conversão de Tempo
 
 - `converter_segundos(segundos)` → **O(1)**
 
 ---
 
-## 📂 Entrada CSV Esperada
+## 📂 Estrutura do CSV
 
 ```
 id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_duration_seconds;comment_text;plataforma;categoria;tipo_conteudo
@@ -105,24 +85,6 @@ id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_du
 
 ---
 
-## 🏁 Objetivo
-
-Desenvolvido como parte da **Fase 3 do Projeto Unificado (DS-PY-003)** com foco em:
-
-- Estruturas eficientes
-- Ordenações clássicas
-- Análise de complexidade
-- Arquitetura POO modular
-
----
-
-## ✅ Requisitos
-
-- Python 3.8+
-- Apenas bibliotecas padrão
-
----
-
 ## 📄 Licença
 
-Uso educacional e acadêmico.
+Uso pessoal.
