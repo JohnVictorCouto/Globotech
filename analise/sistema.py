@@ -326,13 +326,13 @@ class SistemaAnaliseEngajamento:
         """
         Ordena uma lista de objetos em ordem alfabética A → Z com base no atributo fornecido.
         """
-        return sorted(lista, key=lambda obj: getattr(obj, atributo).lower())
+        return self._quick_sort(lista, key=lambda obj: getattr(obj, atributo).lower(), reverse=False)
 
     def _ordenar_alfabeticamente_za(self, lista, atributo):
         """
         Ordena uma lista de objetos em ordem alfabética Z → A com base no atributo fornecido.
         """
-        return sorted(lista, key=lambda obj: getattr(obj, atributo).lower(), reverse=True)
+        return self._quick_sort(lista, key=lambda obj: getattr(obj, atributo).lower(), reverse=True)
     
 
     def relatorio_conteudos_ordenados_por_nome(self, ordem='AZ'):
