@@ -10,9 +10,9 @@ def exibir_menu():
     print("1. Processar arquivo CSV")
     print("2. Gerar Relatório de Engajamento por Conteúdo")
     print("3. Gerar Relatório de Atividade de Usuários")
-    print("4. Top Conteúdos por Tempo Total Consumido")
-    print("5. Top Conteúdos Mais Curtidos")
-    print("6. Top Conteúdos Mais Visualizados (view_start)")
+    print("4. Top 5 Conteúdos por Tempo Total Consumido")
+    print("5. Top 5 Conteúdos Mais Curtidos")
+    print("6. Top 5 Conteúdos Mais Visualizados")
     print("7. Plataforma com Maior Engajamento")
     print("8. Conteúdos Mais Comentados")
     print("9. Total de Interações por Tipo de Conteúdo")
@@ -20,6 +20,10 @@ def exibir_menu():
     print("11. Comentários por Conteúdo")
     print("12. Ordenar Conteudos de A - Z")
     print("13. Ordenar Conteudos de Z - A")
+    print("14. Pesquisar Conteudo")
+    print("15. Pesquisar Plataforma e Listar Conteúdos Associados")
+    print("16. Distribuição de Tipos de Interação por Plataforma")
+    print("17. Pesquisar Conteudo por Categoria")
     print("0. Sair")
     return input("Escolha uma opção: ")
 
@@ -114,6 +118,51 @@ while True:
     elif opcao == "13":
         if dados_processados:
             sistema.relatorio_conteudos_ordenados_por_nome(ordem='ZA')  # Z → A
+        else:
+            print("Primeiro processe o arquivo CSV (Opção 1).")
+
+    elif opcao == "14":
+        if dados_processados:
+            texto_busca = input("\nDigite o a palavra-chave para buscar: ").strip()
+            resultados = sistema.buscar_conteudo_por_nome(texto_busca)
+            print("\nResultados da busca:")
+            if resultados:
+                for c in resultados:
+                    print(f"ID: {c.id_conteudo} - {c.nome_conteudo}")
+            else:
+                print("Nenhum conteúdo encontrado com o texto informado.")
+        else:
+            print("Primeiro processe o arquivo CSV (Opção 1).")
+
+    elif opcao == "15":
+        if dados_processados:
+            nome_plataforma = input("\nDigite o nome da plataforma: ").strip()
+            resultados = sistema.buscar_conteudos_por_plataforma(nome_plataforma)
+            print(f"\nConteúdos acessados pela plataforma '{nome_plataforma}':")
+            if resultados:
+                for conteudo in resultados:
+                    print(f"ID: {conteudo.id_conteudo} - {conteudo.nome_conteudo}")
+            else:
+                print("Nenhum conteúdo encontrado para essa plataforma.")
+        else:
+            print("Primeiro processe o arquivo CSV (Opção 1).")
+
+    elif opcao == "16":
+        if dados_processados:
+            sistema.relatorio_distribuicao_interacoes_por_plataforma()
+        else:
+            print("Primeiro processe o arquivo CSV (Opção 1).")
+
+    elif opcao == "17":
+        if dados_processados:
+            cat = input("\nInforme a categoria para recomendação: ").strip()
+            recomendados = sistema.recomendar_conteudos_por_categoria(cat, top_n=5)
+            if recomendados:
+                print(f"\nConteúdos recomendados para categoria '{cat}':")
+                for c in recomendados:
+                    print(f"- {c.nome_conteudo}")
+            else:
+                print("Nenhuma recomendação disponível para essa categoria.")
         else:
             print("Primeiro processe o arquivo CSV (Opção 1).")
 

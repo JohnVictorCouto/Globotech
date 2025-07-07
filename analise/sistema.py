@@ -1,4 +1,6 @@
 import csv
+from collections import defaultdict
+from datetime import datetime
 from entidades.usuario import Usuario
 from entidades.plataforma import Plataforma
 from entidades.conteudo import Video, Podcast, Artigo
@@ -69,21 +71,23 @@ class SistemaAnaliseEngajamento:
 
                 comentario = linha['comment_text']
                 nome_plataforma = linha['plataforma']
-
+                categoria = linha['categoria'].strip().lower()
                 plataforma = self.obter_plataforma(nome_plataforma)
 
-                tipo_conteudo = None  # Placeholder para futura extensão
+                tipo_conteudo = linha['tipo_conteudo'].strip().lower()
 
                 # Buscar Conteudo na BST
                 conteudo = self._arvore_conteudos.buscar(id_conteudo)
                 if conteudo is None:
                     # Criar conteúdo conforme tipo (default Video)
                     if tipo_conteudo == "podcast":
-                        conteudo = Podcast(id_conteudo, nome_conteudo, 0)
+                        conteudo = Podcast(id_conteudo, nome_conteudo, 0, categoria)
                     elif tipo_conteudo == "artigo":
-                        conteudo = Artigo(id_conteudo, nome_conteudo, 0)
+                        conteudo = Artigo(id_conteudo, nome_conteudo, 0, categoria)
                     else:
-                        conteudo = Video(id_conteudo, nome_conteudo, 0)
+                        conteudo = Video(id_conteudo, nome_conteudo, 0, categoria)
+
+                    conteudo._categoria = categoria
                     self._arvore_conteudos.inserir(conteudo.id_conteudo, conteudo)
 
                 # Buscar Usuario na BST
@@ -131,7 +135,7 @@ class SistemaAnaliseEngajamento:
             if contagem_tipos:
                 print("Interações por tipo:")
                 for tipo, qtd in contagem_tipos.items():
-                    print(f"             {tipo}: {qtd}")
+                    print(f"- {tipo}: {qtd}")
 
             tempo_total = conteudo.calcular_tempo_total_consumo()
             if tempo_total > 0:
@@ -184,9 +188,9 @@ class SistemaAnaliseEngajamento:
             if conteudos_unicos:
                 print(f"Conteúdos únicos consumidos: {len(conteudos_unicos)}")
 
-            plataformas_frequentes = usuario.plataformas_mais_frequentes(top_n=3)
+            plataformas_frequentes = usuario.plataformas_mais_frequentes(top_n=5)
             if plataformas_frequentes:
-                print("Top 3 Plataformas Mais Frequentes:")
+                print("Top 5 Plataformas Mais Frequentes:")
                 for plat, cont in plataformas_frequentes:
                     print(f"             {plat.nome_plataforma}: {cont} interação(ões)")
 
@@ -421,6 +425,110 @@ class SistemaAnaliseEngajamento:
             total_likes = c.calcular_contagem_por_tipo_interacao().get("like", 0)
             print(f"{idx+1}o. {c.nome_conteudo} - {total_likes} curtida(s)")
 
+    def buscar_conteudo_por_nome(self, texto_busca):
+        """
+        Pesquisa e retorna uma lista de conteúdos cujo nome contenha o texto informado.
+        """
+        texto_busca = texto_busca.lower()  # Busca case-insensitive
+        resultados = []
+
+        # Retorna lista de tuplas (chave, valor)
+        todos_conteudos = self._arvore_conteudos.percurso_em_ordem()
+
+        # Itera desempacotando a tupla para acessar o objeto Conteudo (valor)
+        for _, conteudo in todos_conteudos:
+            if texto_busca in conteudo.nome_conteudo.lower():
+                resultados.append(conteudo)
+
+        return resultados
+
+    def buscar_conteudos_por_plataforma(self, nome_plataforma):
+        """
+        Retorna uma lista de conteúdos que tiveram interações associadas à plataforma especificada.
+        """
+        nome_plataforma = nome_plataforma.strip().lower()
+        conteudos_encontrados = set()
+
+        todos_conteudos = [valor for chave, valor in self._arvore_conteudos.percurso_em_ordem()]
+
+        for conteudo in todos_conteudos:
+            for interacao in conteudo._interacoes:
+                if interacao.plataforma_interacao and interacao.plataforma_interacao.nome_plataforma.lower() == nome_plataforma:
+                    conteudos_encontrados.add(conteudo)
+                    break 
+
+        return list(conteudos_encontrados)
+
+    def relatorio_distribuicao_interacoes_por_plataforma(self):
+        """
+        Exibe a distribuição de tipos de interações por plataforma.
+        """
+        distribuicao = defaultdict(lambda: defaultdict(int))
+
+        # Percorre todos os conteúdos na BST
+        conteudos = [valor for _, valor in self._arvore_conteudos.percurso_em_ordem()]
+        for conteudo in conteudos:
+            for interacao in conteudo._interacoes:
+                plataforma = interacao.plataforma_interacao.nome_plataforma if interacao.plataforma_interacao else "Desconhecida"
+                tipo = interacao.tipo_interacao
+                distribuicao[plataforma][tipo] += 1
+
+        print("\nDistribuição de interações por plataforma:\n")
+        for plataforma, tipos in distribuicao.items():
+            print(f"Plataforma: {plataforma}")
+            for tipo, quantidade in tipos.items():
+                print(f"- {tipo.capitalize()}: {quantidade}")
+            print()
+
+    def recomendar_conteudos_por_categoria(self, categoria, top_n=5, peso_interacoes=0.6, peso_tempo=0.4):
+        """
+        Recomenda conteúdos da categoria informada, ordenando por uma métrica combinada
+        de engajamento (número de interações) e tempo total assistido.
+
+        Parâmetros:
+            categoria (str): categoria desejada para recomendação
+            top_n (int): quantidade máxima de conteúdos recomendados
+            peso_interacoes (float): peso para o total de interações (0 a 1)
+            peso_tempo (float): peso para o tempo total consumido (0 a 1)
+        Retorna:
+            lista de conteúdos recomendados (objetos Conteudo)
+        """
+
+        # Obter todos os conteúdos da categoria solicitada
+        conteudos_da_categoria = [
+            conteudo for _, conteudo in self._arvore_conteudos.percurso_em_ordem()
+            if conteudo.categoria and conteudo.categoria.lower() == categoria.lower()
+        ]
+
+        if not conteudos_da_categoria:
+            print(f"Nenhum conteúdo encontrado para a categoria '{categoria}'.")
+            return []
+
+        # Calcular métrica combinada para cada conteúdo
+        lista_pontuacoes = []
+        for conteudo in conteudos_da_categoria:
+            total_interacoes = conteudo.calcular_total_interacoes_engajamento()
+            tempo_total = conteudo.calcular_tempo_total_consumo()
+
+            # Caso não haja máximo > 0, usar 1 para evitar divisão por zero.
+
+            max_interacoes = max(c.calcular_total_interacoes_engajamento() for c in conteudos_da_categoria) or 1
+            max_tempo = max(c.calcular_tempo_total_consumo() for c in conteudos_da_categoria) or 1
+
+            pontuacao = (
+                peso_interacoes * (total_interacoes / max_interacoes) +
+                peso_tempo * (tempo_total / max_tempo)
+            )
+            lista_pontuacoes.append((conteudo, pontuacao))
+
+        # Ordenar pelos scores descendentes
+        lista_pontuacoes.sort(key=lambda x: x[1], reverse=True)
+
+        # Pegar os top_n conteúdos recomendados
+        recomendados = [item[0] for item in lista_pontuacoes[:top_n]]
+
+        return recomendados
+
 
     def converter_segundos(self, total_segundos):
         """
@@ -437,8 +545,8 @@ class SistemaAnaliseEngajamento:
 
     def _quick_sort(self, array, key=lambda x: x, low=0, high=None, reverse=False):
         """
-        Implementação do Quick Sort para ordenar listas.
-        Complexidade média: O(n log n), pior caso O(n^2).
+        Quick Sort para ordenar listas.
+        Tempo médio: O(n log n), pior caso: O(n²).
         """
         if high is None:
             high = len(array) - 1
@@ -447,8 +555,7 @@ class SistemaAnaliseEngajamento:
             pivot = key(arr[high])
             i = low - 1
             for j in range(low, high):
-                cond = key(arr[j]) > pivot if reverse else key(arr[j]) < pivot
-                if cond:
+                if (key(arr[j]) > pivot if reverse else key(arr[j]) < pivot):
                     i += 1
                     arr[i], arr[j] = arr[j], arr[i]
             arr[i+1], arr[high] = arr[high], arr[i+1]
@@ -460,3 +567,16 @@ class SistemaAnaliseEngajamento:
             self._quick_sort(array, key, pi + 1, high, reverse)
         return array
 
+    def _insertion_sort(self, array, key=lambda x: x, reverse=False):
+        """
+        Insertion Sort para ordenar listas pequenas.
+        Tempo: O(n²) no geral, eficiente para listas pequenas.
+        """
+        for i in range(1, len(array)):
+            current = array[i]
+            j = i - 1
+            while j >= 0 and ((key(array[j]) < key(current)) if reverse else (key(array[j]) > key(current))):
+                array[j + 1] = array[j]
+                j -= 1
+            array[j + 1] = current
+        return array

@@ -1,10 +1,11 @@
 from entidades.plataforma import Plataforma
 
 class Conteudo:
-    def __init__(self, id_conteudo, nome_conteudo):
+    def __init__(self, id_conteudo, nome_conteudo,categoria):
         self._id_conteudo = id_conteudo
         self._nome_conteudo = nome_conteudo
         self._interacoes = []
+        self._categoria = categoria
 
     @property
     def id_conteudo(self):
@@ -14,13 +15,17 @@ class Conteudo:
     def nome_conteudo(self):
         return self._nome_conteudo
 
+    @property
+    def categoria(self):
+        return self._categoria
+
     def adicionar_interacao(self, interacao):
         self._interacoes.append(interacao)
 
     def calcular_total_interacoes_engajamento(self):
         total = 0
         for i in self._interacoes:
-            if i.tipo_interacao in ["like", "share", "comment"]:
+            if i.tipo_interacao in ["like", "share", "comment","view_start"]:
                 total += 1
         return total
 
@@ -73,8 +78,8 @@ class Conteudo:
 
 
 class Video(Conteudo):
-    def __init__(self, id_conteudo, nome_conteudo, duracao_total_video_seg):
-        super().__init__(id_conteudo, nome_conteudo)
+    def __init__(self, id_conteudo, nome_conteudo, duracao_total_video_seg, categoria=None):
+        super().__init__(id_conteudo, nome_conteudo, categoria)
         self.__duracao_total_video_seg = duracao_total_video_seg
 
     @property
@@ -89,8 +94,8 @@ class Video(Conteudo):
 
 
 class Podcast(Conteudo):
-    def __init__(self, id_conteudo, nome_conteudo, duracao_total_episodio_seg=0):
-        super().__init__(id_conteudo, nome_conteudo)
+    def __init__(self, id_conteudo, nome_conteudo, duracao_total_episodio_seg=0, categoria=None):
+        super().__init__(id_conteudo, nome_conteudo, categoria)
         self.__duracao_total_episodio_seg = duracao_total_episodio_seg
 
     @property
@@ -99,8 +104,8 @@ class Podcast(Conteudo):
 
 
 class Artigo(Conteudo):
-    def __init__(self, id_conteudo, nome_conteudo, tempo_leitura_estimado_seg=0):
-        super().__init__(id_conteudo, nome_conteudo)
+    def __init__(self, id_conteudo, nome_conteudo, tempo_leitura_estimado_seg=0, categoria=None):
+        super().__init__(id_conteudo, nome_conteudo, categoria)
         self.__tempo_leitura_estimado_seg = tempo_leitura_estimado_seg
 
     @property
