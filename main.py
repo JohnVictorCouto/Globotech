@@ -167,7 +167,7 @@ while True:
             print("Primeiro processe o arquivo CSV (Opção 1).")
 
     elif opcao == "0":
-        print("Encerrando o programa. Volte Sempre")
+        print("Encerrando o programa, Volte Sempre")
         break
 
     else:
