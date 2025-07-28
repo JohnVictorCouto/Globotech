@@ -164,4 +164,3 @@ id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_du
   }
 }
 ```
----
