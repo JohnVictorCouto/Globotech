@@ -164,3 +164,53 @@ id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_du
   }
 }
 ```
+---
+## Modelo Entidade-Relacionamento (MER)
+
+```mermaid
+erDiagram
+
+  Usuario {
+    INT id_usuario PK
+  }
+
+  Plataforma {
+    VARCHAR nome_plataforma PK
+  }
+
+  Categoria {
+    INT id_categoria PK
+    VARCHAR nome_categoria
+  }
+
+  Conteudo {
+    INT id_conteudo PK
+    VARCHAR nome_conteudo
+    VARCHAR tipo_conteudo
+  }
+
+  Interacao {
+    INT id_interacao PK
+    INT id_conteudo FK
+    INT id_usuario FK
+    VARCHAR plataforma FK
+    DATETIME timestamp_interacao
+    VARCHAR tipo_interacao
+    INT watch_duration_seconds
+    TEXT comment_text
+  }
+
+  ConteudoCategoria {
+    INT id_conteudo FK
+    INT id_categoria FK
+  }
+
+  %% RELACIONAMENTOS
+  Usuario ||--o{ Interacao : realiza
+  Conteudo ||--o{ Interacao : recebe
+  Plataforma ||--o{ Conteudo : oferece
+  Plataforma ||--o{ Interacao : origem
+  Conteudo ||--o{ ConteudoCategoria : "classificado com"
+  Categoria ||--o{ ConteudoCategoria : classifica
+```
+#### OBS: `nome_categoria` possui restrição UNIQUE e, dentro de `ConteudoCategoria`, possui uma PRIMARY KEY COMPOSTA (`id_conteudo`, `id_categoria`).
