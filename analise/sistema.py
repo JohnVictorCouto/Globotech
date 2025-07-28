@@ -510,11 +510,6 @@ class SistemaAnaliseEngajamento:
             total_interacoes = conteudo.calcular_total_interacoes_engajamento()
             tempo_total = conteudo.calcular_tempo_total_consumo()
 
-            # Caso não haja máximo > 0, usar 1 para evitar divisão por zero.
-
-            max_interacoes = max(c.calcular_total_interacoes_engajamento() for c in conteudos_da_categoria) or 1
-            max_tempo = max(c.calcular_tempo_total_consumo() for c in conteudos_da_categoria) or 1
-
             pontuacao = (
                 peso_interacoes * (total_interacoes / max_interacoes) +
                 peso_tempo * (tempo_total / max_tempo)
