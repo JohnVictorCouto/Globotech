@@ -65,7 +65,7 @@
 | Método                                      | Função                                           | Complexidade         |
 |--------------------------------------------|--------------------------------------------------|-------------------------------|
 | `relatorio_conteudos_consumidos_por_horario()` | Conteúdos consumidos por faixa de hora          | **O(m + c log c)**            |
-| `relatorio_conteudos_por_categoria()`       | Lista conteúdos agrupados por categoria          | **O(n + n·g + g log g)**       |
+| `relatorio_conteudos_por_categoria()`       | Lista conteúdos agrupados por categoria          | **O(n + n x g + g log g)**       |
 | `relatorio_engajamento_por_categoria()`     | Total de interações e tempo por categoria        | **O(m)**                      |
 | `relatorio_horario_pico_engajamento()`      | Descobre o horário com mais interações           | **O(m)**                      |
 
