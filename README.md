@@ -110,7 +110,7 @@ id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_du
 ```mermaid
 graph TD
 
-  %% Entidades (retângulos)
+  %% ENTIDADES (Retângulos)
   Usuario[Usuario]
   Plataforma[Plataforma]
   Categoria[Categoria]
@@ -118,7 +118,7 @@ graph TD
   Interacao[Interação]
   ConteudoCategoria[ConteúdoCategoria]
 
-  %% Atributos (círculos)
+  %% ATRIBUTOS (Círculos)
   id_usuario((id_usuario))
   nome_plataforma((nome_plataforma))
   id_categoria((id_categoria))
@@ -132,7 +132,15 @@ graph TD
   watch_duration_seconds((watch_duration_seconds))
   comment_text((comment_text))
 
-  %% Ligações Entidade → Atributos
+  %% RELACIONAMENTOS (Losangos simulados)
+  R1{{realiza}}
+  R2{{recebe}}
+  R3{{oferece}}
+  R4{{origina}}
+  R5{{classificado com}}
+  R6{{classifica}}
+
+  %% LIGAÇÕES: Entidade → Atributo
   Usuario --> id_usuario
   Plataforma --> nome_plataforma
   Categoria --> id_categoria
@@ -152,13 +160,25 @@ graph TD
   ConteudoCategoria --> id_conteudo
   ConteudoCategoria --> id_categoria
 
-  %% Relacionamentos (nomeados com texto intermediário)
-  Usuario ---|realiza| Interacao
-  Conteudo ---|recebe| Interacao
-  Plataforma ---|oferece| Conteudo
-  Plataforma ---|origina| Interacao
-  Conteudo ---|classificado com| ConteudoCategoria
-  Categoria ---|classifica| ConteudoCategoria
+  %% LIGAÇÕES: Entidades ↔ Relacionamentos (com losangos)
+  Usuario --- R1
+  R1 --- Interacao
+
+  Conteudo --- R2
+  R2 --- Interacao
+
+  Plataforma --- R3
+  R3 --- Conteudo
+
+  Plataforma --- R4
+  R4 --- Interacao
+
+  Conteudo --- R5
+  R5 --- ConteudoCategoria
+
+  Categoria --- R6
+  R6 --- ConteudoCategoria
+
 ```
 ---
 ## Diagrama Entidade-Relacionamento (DER)
