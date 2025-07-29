@@ -62,7 +62,7 @@
 
 ## Outros Relatórios
 
-| Método                                      | Função                                           | Complexidade Temporal         |
+| Método                                      | Função                                           | Complexidade         |
 |--------------------------------------------|--------------------------------------------------|-------------------------------|
 | `relatorio_conteudos_consumidos_por_horario()` | Conteúdos consumidos por faixa de hora          | **O(m + c log c)**            |
 | `relatorio_conteudos_por_categoria()`       | Lista conteúdos agrupados por categoria          | **O(n + n·g + g log g)**       |
@@ -103,7 +103,7 @@
 ## Estrutura do CSV
 
 ```
-id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_duration_seconds;comment_text;plataforma;categorias;tipo_conteudo
+id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_duration_seconds;comment_text;plataforma;tipo_conteudo;categorias
 ```
 ---
 ## Modelo Entidade-Relacionamento (MER)
