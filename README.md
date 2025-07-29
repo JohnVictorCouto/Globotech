@@ -133,12 +133,12 @@ graph TD
   comment_text((comment_text))
 
   %% RELACIONAMENTOS (Losangos simulados)
-  R1{{realiza}}
-  R2{{recebe}}
-  R3{{oferece}}
-  R4{{origina}}
-  R5{{classificado com}}
-  R6{{classifica}}
+  R1{{realiza várias}}
+  R2{{recebe vários}}
+  R3{{oferece vários}}
+  R4{{origina muitas}}
+  R5{{classificado com muitas}}
+  R6{{classifica várias}}
 
   %% LIGAÇÕES: Entidade → Atributo
   Usuario --> id_usuario
