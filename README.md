@@ -107,6 +107,59 @@ id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_du
 ```
 ---
 ## Modelo Entidade-Relacionamento (MER)
+```mermaid
+graph TD
+
+  %% Entidades (retângulos)
+  Usuario[Usuario]
+  Plataforma[Plataforma]
+  Categoria[Categoria]
+  Conteudo[Conteúdo]
+  Interacao[Interação]
+  ConteudoCategoria[ConteúdoCategoria]
+
+  %% Atributos (círculos)
+  id_usuario((id_usuario))
+  nome_plataforma((nome_plataforma))
+  id_categoria((id_categoria))
+  nome_categoria((nome_categoria))
+  id_conteudo((id_conteudo))
+  nome_conteudo((nome_conteudo))
+  tipo_conteudo((tipo_conteudo))
+  id_interacao((id_interacao))
+  timestamp_interacao((timestamp_interacao))
+  tipo_interacao((tipo_interacao))
+  watch_duration_seconds((watch_duration_seconds))
+  comment_text((comment_text))
+
+  %% Ligações Entidade → Atributos
+  Usuario --> id_usuario
+  Plataforma --> nome_plataforma
+  Categoria --> id_categoria
+  Categoria --> nome_categoria
+  Conteudo --> id_conteudo
+  Conteudo --> nome_conteudo
+  Conteudo --> tipo_conteudo
+  Conteudo --> nome_plataforma
+  Interacao --> id_interacao
+  Interacao --> id_conteudo
+  Interacao --> id_usuario
+  Interacao --> nome_plataforma
+  Interacao --> timestamp_interacao
+  Interacao --> tipo_interacao
+  Interacao --> watch_duration_seconds
+  Interacao --> comment_text
+  ConteudoCategoria --> id_conteudo
+  ConteudoCategoria --> id_categoria
+
+  %% Relacionamentos (nomeados com texto intermediário)
+  Usuario ---|realiza| Interacao
+  Conteudo ---|recebe| Interacao
+  Plataforma ---|oferece| Conteudo
+  Plataforma ---|origina| Interacao
+  Conteudo ---|classificado com| ConteudoCategoria
+  Categoria ---|classifica| ConteudoCategoria
+```
 ---
 ## Diagrama Entidade-Relacionamento (DER)
 
