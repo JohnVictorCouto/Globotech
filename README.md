@@ -106,66 +106,9 @@
 id_usuario;id_conteudo;nome_conteudo;timestamp_interacao;tipo_interacao;watch_duration_seconds;comment_text;plataforma;categorias;tipo_conteudo
 ```
 ---
-
-## Estrutura do Banco de Dados MongoDB
-
-### Database: `Globotech_Database`  
-### Collection: `Interactions`
-### `Validation Schema`
-```json
-{
-  "$jsonSchema": {
-    "bsonType": "object",
-    "required": [
-      "_id",
-      "categorias",
-      "id_conteudo",
-      "id_usuario",
-      "nome_conteudo",
-      "plataforma",
-      "timestamp_interacao",
-      "tipo_interacao"
-    ],
-    "properties": {
-      "_id": {
-        "bsonType": "objectId"
-      },
-      "categorias": {
-        "bsonType": "string"
-      },
-      "comment_text": {
-        "bsonType": "string"
-      },
-      "id_conteudo": {
-        "bsonType": "int"
-      },
-      "id_usuario": {
-        "bsonType": "int"
-      },
-      "nome_conteudo": {
-        "bsonType": "string"
-      },
-      "plataforma": {
-        "bsonType": "string"
-      },
-      "timestamp_interacao": {
-        "bsonType": "date"
-      },
-      "tipo_conteudo": {
-        "bsonType": "string"
-      },
-      "tipo_interacao": {
-        "bsonType": "string"
-      },
-      "watch_duration_seconds": {
-        "bsonType": "int"
-      }
-    }
-  }
-}
-```
----
 ## Modelo Entidade-Relacionamento (MER)
+---
+## Diagrama Entidade-Relacionamento (DER)
 
 ```mermaid
 erDiagram
