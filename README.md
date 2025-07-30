@@ -144,7 +144,12 @@ graph TD
 
   Categoria --- R6
   R6 --- ConteudoCategoria
-
+  %% ADICIONANDO A LEGENDA
+    subgraph Legend [Legenda]
+      A[Entidades]
+      C{{Relacionamentos}}
+      style Legend stroke:#333,stroke-width:1px;
+    end
 ```
 ---
 ## Diagrama Entidade-Relacionamento (DER)
