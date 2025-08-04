@@ -162,7 +162,8 @@ erDiagram
   }
 
   Plataforma {
-    VARCHAR nome_plataforma PK
+    INT id_plataforma PK
+    VARCHAR nome_plataforma
   }
 
   Categoria {
